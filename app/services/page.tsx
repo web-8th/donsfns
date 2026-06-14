@@ -6,9 +6,26 @@ import { Text } from '@/components/Text';
 import { getDelayClass } from '@/utils/animations';
 
 export const metadata: Metadata = {
-  title: "Services | Don's Fences & Services — Fencing Contractor Enderby BC",
+  title: 'Services',
   description:
-    'Fencing, gates, wood milling, automotive, and cold storage rental. Professional contractor services in Enderby, BC and the Okanagan.',
+    'Fencing & gates, wood milling, automotive, and cold storage rental in Enderby, BC. Professional contractor serving Vernon, Armstrong, Salmon Arm, and the Okanagan.',
+  keywords: [
+    'fence installation Enderby',
+    'ranch fencing BC',
+    'highway fencing contractor',
+    'custom gates Okanagan',
+    'wood milling Enderby BC',
+    'cold storage rental BC',
+    'automotive Enderby BC',
+  ],
+  alternates: { canonical: 'https://donsfences.ca/services' },
+  openGraph: {
+    url: 'https://donsfences.ca/services',
+    title: "Services | Don's Fences & Services",
+    description:
+      'Fencing, custom gates, wood milling, automotive, and cold storage rental. Enderby, BC contractor serving the Okanagan.',
+    images: [{ url: '/don_4.jpg', width: 1200, height: 630, alt: 'Fence installation by Don' }],
+  },
 };
 
 export default function ServicesPage() {

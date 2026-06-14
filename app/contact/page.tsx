@@ -6,9 +6,23 @@ import { Text } from '@/components/Text';
 import { getDelayClass } from '@/utils/animations';
 
 export const metadata: Metadata = {
-  title: "Contact | Don's Fences & Services — Fencing Contractor Enderby BC",
+  title: 'Contact',
   description:
-    "Get a free quote for fence installation in Enderby, Vernon, Armstrong, Salmon Arm, and the Okanagan. Contact Don's Fences & Services.",
+    "Get a free quote for fence installation in Enderby, Vernon, Armstrong, Salmon Arm, and the Okanagan. Contact Don's Fences & Services — (250) 306-5064.",
+  keywords: [
+    'fence quote Enderby BC',
+    'free fence estimate Okanagan',
+    'contact fencing contractor BC',
+    'fence installation quote Vernon',
+    'fencing estimate Salmon Arm',
+  ],
+  alternates: { canonical: 'https://donsfences.ca/contact' },
+  openGraph: {
+    url: 'https://donsfences.ca/contact',
+    title: "Contact | Don's Fences & Services",
+    description:
+      "Get a free fence installation quote for Enderby, Vernon, Armstrong, Salmon Arm, and the Okanagan. Call (250) 306-5064.",
+  },
 };
 
 export default function ContactPage() {
