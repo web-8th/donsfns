@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap');
+    </style>
+  </defs>
+
+  <rect width="500" height="500" fill="#FFFFFF"/>
+
+  <g transform="translate(250,190)">
+    <path d="M-80 -100 L-80 100 L-20 100 Q80 100 80 0 Q80 -100 -20 -100 Z" fill="#2C2C2C"/>
+    <path d="M-55 -72 L-55 72 L-16 72 Q52 72 52 0 Q52 -72 -16 -72 Z" fill="#FFFFFF"/>
+  </g>
+
+  <line x1="110" y1="308" x2="390" y2="308" stroke="#C8860A" stroke-width="1.5"/>
+
+  <text x="250" y="358" text-anchor="middle"
+        font-family="'Bebas Neue', sans-serif" font-size="48"
+        letter-spacing="6" fill="#2C2C2C">DON'S FENCES</text>
+
+  <text x="250" y="386" text-anchor="middle"
+        font-family="'Bebas Neue', sans-serif" font-size="22"
+        letter-spacing="5" fill="#C8860A">&amp; SERVICES</text>
+</svg>

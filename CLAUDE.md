@@ -60,3 +60,24 @@ Both must be set or the Supabase client will log warnings and auth will fail.
 ## Branch & PR Conventions
 
 Use prefixed branches: `feature/*`, `fix/*`, `chore/*`.
+
+## Don's Fences & Services — Project Notes
+
+**UI Rules**
+
+- Use shadcn/ui components for everything — buttons, cards, forms, navigation, etc.
+- Never use raw HTML elements where a shadcn component exists
+- Use the existing <Text> component for all text rendering
+
+**Images**
+
+- All client images are in `/public`
+- First two images are portrait photos of Don — use in hero/about with editorial
+  layout (side-by-side or text beside image), never as full-width background banners
+- Use `object-fit: cover` with fixed height for portrait images, preserve framing
+- Remaining images go in the Gallery page and homepage sections
+
+**Placeholders**
+
+- Leave [PHONE], [EMAIL], [SERVICE_AREAS] as literal placeholders in the copy
+- Use Next.js <Image> for all images with proper alt text
