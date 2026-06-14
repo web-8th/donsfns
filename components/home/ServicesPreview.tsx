@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Car, Layers, ShieldCheck, Snowflake } from 'lucide-react';
+import { Car, Fence, Layers, Snowflake } from 'lucide-react';
 
 import { Text } from '@/components/Text';
 import { Button } from '@/components/ui/button';
@@ -8,7 +8,7 @@ import { getDelayClass } from '@/utils/animations';
 
 const services = [
   {
-    icon: ShieldCheck,
+    icon: Fence,
     title: 'Fencing & Gates',
     description:
       'Ranch fences, highway barriers, BC Parks projects, residential and farm fencing. Built to last decades.',
