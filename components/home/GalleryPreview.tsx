@@ -7,7 +7,7 @@ import { getDelayClass } from '@/utils/animations';
 
 const previewImages = [
   { src: '/don_4.jpg', alt: 'Backyard fence installation' },
-  { src: '/don_8.jpg', alt: 'Farm fencing in the BC interior' },
+  { src: '/don_7.jpg', alt: 'Farm fencing in the BC interior' },
   { src: '/don_11.jpg', alt: 'Fence gate installation for private property' },
 ];
 
@@ -26,7 +26,8 @@ export function GalleryPreview() {
           size='lg'
           className={`fade-in-from-bottom ${getDelayClass(1)} mx-auto max-w-xl`}
         >
-          Fence installations across Enderby, Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.
+          Fence installations across Enderby, Vernon, Armstrong, Lake Country, Kelowna,
+          and Salmon Arm.
         </Text>
       </div>
 
