@@ -70,6 +70,17 @@ export function SiteFooter() {
             >
               doncookbc@yahoo.ca
             </a>
+            <a
+              href='https://www.google.com/maps/place/Don%27s+Fences/@50.5501916,-119.1256252,17z/data=!4m16!1m9!3m8!1s0x537e8845ed7ef089:0x64f2599a99c8404c!2s67+Enderby+Mabel+Lk+Rd,+Enderby,+BC+V0E+1V4!3b1!8m2!3d50.5502895!4d-119.1256927!10e5!16s%2Fg%2F11c5pvk06n!3m5!1s0x537e8936c83c1faf:0xb3ca86e28c69c637!8m2!3d50.5501872!4d-119.1243997!16s%2Fg%2F11s5gzx4zf?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-sm text-muted-foreground underline transition-colors
+                hover:text-foreground'
+            >
+              67 Enderby Mabel Lk Rd
+              <br />
+              Enderby, BC V0E 1V4
+            </a>
           </div>
         </div>
 
