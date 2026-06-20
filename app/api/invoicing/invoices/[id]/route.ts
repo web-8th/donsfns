@@ -57,6 +57,17 @@ export async function DELETE(
 ) {
   const { id } = await params;
   const supabase = createAdminClient();
+
+  const { data: logs } = await supabase
+    .from('invoice_email_log')
+    .select('pdf_path')
+    .eq('invoice_id', id);
+
+  const paths = (logs ?? []).map((l) => l.pdf_path).filter(Boolean) as string[];
+  if (paths.length > 0) {
+    await supabase.storage.from('donsfns_invoices').remove(paths);
+  }
+
   const { error } = await supabase.from('invoices').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   revalidatePath('/invoicing/invoices');

@@ -61,7 +61,7 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
   }
 
   return (
-    <>
+    <div className=''>
       <div className='mb-4 flex items-center justify-between'>
         <Text size='sm' variant='muted'>
           {invoices.length} invoice{invoices.length !== 1 ? 's' : ''}
@@ -189,6 +189,6 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
           </TableBody>
         </Table>
       </div>
-    </>
+    </div>
   );
 }

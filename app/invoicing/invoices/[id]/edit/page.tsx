@@ -29,9 +29,9 @@ export default async function EditInvoicePage({
   return (
     <>
       <Button variant='outline' size='sm' asChild className='mb-2 w-full lg:w-auto'>
-        <Link href='/invoicing/invoices'>
+        <Link href={`/invoicing/invoices/${id}`}>
           <ChevronLeft />
-          Back to Invoices
+          Back to Invoice
         </Link>
       </Button>
       <div className='max-w-4xl mx-auto'>
