@@ -63,7 +63,7 @@ export function ClientsTable({ clients }: { clients: Client[] }) {
       });
       const result = await res.json();
       if (result.error) {
-        toast.error(result.error);
+        toast.error('Something went wrong. Please try again or refresh.');
         return;
       }
       setDeleteTarget(undefined);

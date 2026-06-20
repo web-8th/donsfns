@@ -127,8 +127,8 @@ export function InvoiceForm({ clients, invoice }: Props) {
         });
         const result = await res.json();
         if (result.error) {
-          form.setError('root', { message: result.error });
-          toast.error(result.error);
+          form.setError('root', { message: 'Something went wrong. Please try again or refresh.' });
+          toast.error('Something went wrong. Please try again or refresh.');
           return;
         }
         toast.success('Invoice saved.');
@@ -141,8 +141,8 @@ export function InvoiceForm({ clients, invoice }: Props) {
         });
         const result = await res.json();
         if (result.error) {
-          form.setError('root', { message: result.error });
-          toast.error(result.error);
+          form.setError('root', { message: 'Something went wrong. Please try again or refresh.' });
+          toast.error('Something went wrong. Please try again or refresh.');
           return;
         }
         toast.success('Invoice created.');

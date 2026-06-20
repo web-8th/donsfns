@@ -59,8 +59,8 @@ export function SendInvoiceButton({
       const result = await res.json();
       if (result.error) {
         setPhase('idle');
-        onError?.(result.error);
-        toast.error(result.error);
+        onError?.('Something went wrong. Please try again or refresh.');
+        toast.error('Something went wrong. Please try again or refresh.');
       } else {
         setPhase('sent');
         router.refresh();

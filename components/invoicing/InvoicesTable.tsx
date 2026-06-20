@@ -130,7 +130,7 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
       const res = await fetch(`/api/invoicing/invoices/${id}`, { method: 'DELETE' });
       const result = await res.json();
       if (result.error) {
-        toast.error(result.error);
+        toast.error('Something went wrong. Please try again or refresh.');
         return;
       }
       router.refresh();
@@ -144,7 +144,7 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
       const res = await fetch(`/api/invoicing/invoices/${id}/send`, { method: 'POST' });
       const result = await res.json();
       if (result.error) {
-        toast.error(result.error);
+        toast.error('Something went wrong. Please try again or refresh.');
       } else {
         router.refresh();
         toast.success('Invoice sent.');

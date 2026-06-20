@@ -2,7 +2,7 @@
 
 import { format } from 'date-fns';
 import { Download, FileText } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 
 import type { InvoiceEmailLog, InvoiceSnapshot } from '@/types/database';
 import { Text } from '@/components/Text';
@@ -11,26 +11,33 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { toast } from 'sonner';
 
 export function SentHistory({ logs }: { logs: InvoiceEmailLog[] }) {
   const [snapshot, setSnapshot] = useState<InvoiceSnapshot | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
   function openSnapshot(log: InvoiceEmailLog) {
     const snap = log.snapshot as unknown as InvoiceSnapshot;
     setSnapshot(snap);
   }
 
-  function downloadPdf(log: InvoiceEmailLog) {
-    if (!log.pdf_path) return;
-    startTransition(async () => {
+  async function downloadPdf(log: InvoiceEmailLog) {
+    if (!log.pdf_path || downloadingId === log.id) return;
+    setDownloadingId(log.id);
+    try {
       const res = await fetch(
         `/api/invoicing/invoices/${log.invoice_id}/pdf-url?pdf_path=${encodeURIComponent(log.pdf_path!)}`
       );
       const { url, error } = await res.json();
-      if (error || !url) return;
+      if (error || !url) {
+        toast.error('Something went wrong. Please try again or refresh.');
+        return;
+      }
       window.open(url, '_blank');
-    });
+    } finally {
+      setDownloadingId(null);
+    }
   }
 
   if (logs.length === 0) {
@@ -75,17 +82,12 @@ export function SentHistory({ logs }: { logs: InvoiceEmailLog[] }) {
                   </Button>
                   {log.pdf_path && (
                     <Button
-                      variant='ghost'
+                      variant='outline'
                       size='sm'
-                      className='h-7 text-xs'
-                      disabled={isPending}
+                      disabled={downloadingId === log.id}
                       onClick={() => downloadPdf(log)}
                     >
-                      {isPending ? (
-                        <Spinner className='mr-1 h-3 w-3' />
-                      ) : (
-                        <Download className='mr-1 h-3 w-3' />
-                      )}
+                      {downloadingId === log.id ? <Spinner /> : <Download />}
                       PDF
                     </Button>
                   )}
