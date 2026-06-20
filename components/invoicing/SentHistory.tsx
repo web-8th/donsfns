@@ -36,7 +36,8 @@ export function SentHistory({ logs }: { logs: InvoiceEmailLog[] }) {
   if (logs.length === 0) {
     return (
       <Text size='sm' variant='muted'>
-        No sends yet. Use the Send button above to email this invoice.
+        No sends yet. Use the <span className='font-bold'>Send Invoice</span> button above
+        to email this invoice.
       </Text>
     );
   }

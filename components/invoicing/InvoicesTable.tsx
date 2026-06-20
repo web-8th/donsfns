@@ -1,10 +1,10 @@
-﻿'use client';
+'use client';
 
 import { format } from 'date-fns';
-import { Eye, Info, Lightbulb, Pencil, Plus, Trash2 } from 'lucide-react';
+import { CalendarIcon, Eye, Pencil, Plus, Search, Trash2, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useMemo, useState, useTransition } from 'react';
 
 import type { Client, Invoice } from '@/types/database';
 import { useToast } from '@/hooks/use-toast';
@@ -21,6 +21,15 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/Text';
 import {
@@ -42,10 +51,68 @@ interface InvoiceRow extends Invoice {
   clients: Client;
 }
 
+type SearchBy = 'invoice_number' | 'client' | 'date' | 'status';
+
 export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
   const router = useRouter();
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
+
+  const [searchBy, setSearchBy] = useState<SearchBy>('invoice_number');
+  const [invYear, setInvYear] = useState('');
+  const [invNum, setInvNum] = useState('');
+  const [clientId, setClientId] = useState('');
+  const [dateValue, setDateValue] = useState<Date | undefined>();
+  const [statusValue, setStatusValue] = useState('');
+  const [dateOpen, setDateOpen] = useState(false);
+
+  const uniqueClients = useMemo(() => {
+    const seen = new Set<string>();
+    const result: Client[] = [];
+    for (const inv of invoices) {
+      if (inv.clients && !seen.has(inv.clients.id)) {
+        seen.add(inv.clients.id);
+        result.push(inv.clients);
+      }
+    }
+    return result.sort((a, b) => a.name.localeCompare(b.name));
+  }, [invoices]);
+
+  function clearSearch() {
+    setInvYear('');
+    setInvNum('');
+    setClientId('');
+    setDateValue(undefined);
+    setStatusValue('');
+  }
+
+  function handleSearchByChange(val: string) {
+    setSearchBy(val as SearchBy);
+    clearSearch();
+  }
+
+  const hasSearch = !!(invYear || invNum || clientId || dateValue || statusValue);
+
+  const filtered = useMemo(() => {
+    switch (searchBy) {
+      case 'invoice_number': {
+        if (!invYear && !invNum) return invoices;
+        const suffix = [invYear, invNum].filter(Boolean).join('-');
+        return invoices.filter((inv) => inv.invoice_number.includes(suffix));
+      }
+      case 'client':
+        return clientId ? invoices.filter((inv) => inv.client_id === clientId) : invoices;
+      case 'date': {
+        if (!dateValue) return invoices;
+        const dateStr = format(dateValue, 'yyyy-MM-dd');
+        return invoices.filter((inv) => inv.issue_date === dateStr);
+      }
+      case 'status':
+        return statusValue ? invoices.filter((inv) => inv.status === statusValue) : invoices;
+      default:
+        return invoices;
+    }
+  }, [invoices, searchBy, invYear, invNum, clientId, dateValue, statusValue]);
 
   function handleDelete(id: string) {
     startTransition(async () => {
@@ -61,10 +128,116 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
   }
 
   return (
-    <div className=''>
-      <div className='mb-4 flex items-center justify-between'>
+    <div className='space-y-4'>
+      {/* Search bar */}
+      <div className='flex items-center gap-2 rounded-lg border bg-background px-3 py-2 shadow-sm'>
+        <Search className='h-4 w-4 shrink-0 text-muted-foreground' />
+
+        <Select value={searchBy} onValueChange={handleSearchByChange}>
+          <SelectTrigger className='h-auto w-auto min-w-24 border-0 p-0 text-sm font-medium shadow-none focus:ring-0 focus-visible:ring-0'>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='invoice_number'>Invoice #</SelectItem>
+            <SelectItem value='client'>Client</SelectItem>
+            <SelectItem value='date'>Date</SelectItem>
+            <SelectItem value='status'>Status</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <div className='h-4 w-px shrink-0 bg-border' />
+
+        {searchBy === 'invoice_number' && (
+          <div className='flex flex-1 items-center'>
+            <span className='select-none font-mono text-sm text-muted-foreground'>INV-</span>
+            <input
+              className='w-14 bg-transparent font-mono text-sm outline-none placeholder:text-muted-foreground/50'
+              placeholder='2025'
+              maxLength={4}
+              value={invYear}
+              onChange={(e) => setInvYear(e.target.value.replace(/\D/g, ''))}
+            />
+            <span className='select-none font-mono text-sm text-muted-foreground'>-</span>
+            <input
+              className='w-12 bg-transparent font-mono text-sm outline-none placeholder:text-muted-foreground/50'
+              placeholder='001'
+              maxLength={4}
+              value={invNum}
+              onChange={(e) => setInvNum(e.target.value.replace(/\D/g, ''))}
+            />
+          </div>
+        )}
+
+        {searchBy === 'client' && (
+          <Select value={clientId} onValueChange={setClientId}>
+            <SelectTrigger className='h-auto flex-1 border-0 p-0 text-sm shadow-none focus:ring-0 focus-visible:ring-0'>
+              <SelectValue placeholder='Select a client…' />
+            </SelectTrigger>
+            <SelectContent>
+              {uniqueClients.map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
+        {searchBy === 'date' && (
+          <Popover open={dateOpen} onOpenChange={setDateOpen}>
+            <PopoverTrigger asChild>
+              <button className='flex flex-1 items-center gap-2 text-left text-sm outline-none'>
+                <CalendarIcon className='h-4 w-4 shrink-0 text-muted-foreground' />
+                {dateValue ? (
+                  <span>{format(dateValue, 'MMM d, yyyy')}</span>
+                ) : (
+                  <span className='text-muted-foreground'>Pick a date…</span>
+                )}
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className='w-auto p-0' align='start'>
+              <Calendar
+                mode='single'
+                selected={dateValue}
+                onSelect={(d) => {
+                  setDateValue(d);
+                  setDateOpen(false);
+                }}
+                captionLayout='dropdown'
+              />
+            </PopoverContent>
+          </Popover>
+        )}
+
+        {searchBy === 'status' && (
+          <Select value={statusValue} onValueChange={setStatusValue}>
+            <SelectTrigger className='h-auto flex-1 border-0 p-0 text-sm shadow-none focus:ring-0 focus-visible:ring-0'>
+              <SelectValue placeholder='Select a status…' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='draft'>Draft</SelectItem>
+              <SelectItem value='sent'>Sent</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
+
+        {hasSearch && (
+          <Button
+            variant='ghost'
+            size='icon'
+            className='ml-auto h-7 w-7 shrink-0 text-muted-foreground hover:text-foreground'
+            onClick={clearSearch}
+          >
+            <X className='h-3.5 w-3.5' />
+          </Button>
+        )}
+      </div>
+
+      <div className='flex items-center justify-between'>
         <Text size='sm' variant='muted'>
-          {invoices.length} invoice{invoices.length !== 1 ? 's' : ''}
+          {hasSearch
+            ? `${filtered.length} of ${invoices.length} invoice${invoices.length !== 1 ? 's' : ''}`
+            : `${invoices.length} invoice${invoices.length !== 1 ? 's' : ''}`}
         </Text>
         <Button size='sm' asChild>
           <Link href='/invoicing/invoices/new'>
@@ -87,17 +260,16 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.length === 0 && (
+            {filtered.length === 0 && (
               <TableRow>
-                <TableCell
-                  colSpan={6}
-                  className='py-10 text-center text-muted-foreground'
-                >
-                  No invoices yet. Create your first invoice to get started.
+                <TableCell colSpan={6} className='py-10 text-center text-muted-foreground'>
+                  {hasSearch
+                    ? 'No invoices match your search.'
+                    : 'No invoices yet. Create your first invoice to get started.'}
                 </TableCell>
               </TableRow>
             )}
-            {invoices.map((inv) => (
+            {filtered.map((inv) => (
               <TableRow key={inv.id}>
                 <TableCell className='font-mono text-sm font-medium'>
                   {inv.invoice_number}
@@ -147,8 +319,7 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
                               <Button
                                 variant='ghost'
                                 size='icon'
-                                className='h-8 w-8 text-destructive
-                                  hover:text-destructive'
+                                className='h-8 w-8 text-destructive hover:text-destructive'
                                 disabled={isPending}
                               >
                                 {isPending ? (
@@ -173,8 +344,7 @@ export function InvoicesTable({ invoices }: { invoices: InvoiceRow[] }) {
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDelete(inv.id)}
-                              className='bg-destructive text-destructive-foreground
-                                hover:bg-destructive/90'
+                              className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
                             >
                               Delete
                             </AlertDialogAction>
