@@ -67,7 +67,7 @@ export function buildInvoiceEmailHtml(snapshot: InvoiceSnapshot): string {
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" border="0"
-               style="max-width:600px;background:${brand.cream};border:1px solid ${brand.border};border-radius:4px;overflow:hidden;">
+               style="max-width:600px;background:${brand.cream};border:1px solid ${brand.border};border-radius:12px;overflow:hidden;">
 
           <!-- Header -->
           <tr>
@@ -77,10 +77,10 @@ export function buildInvoiceEmailHtml(snapshot: InvoiceSnapshot): string {
                   <td>
                     <p style="margin:0;font-size:20px;font-weight:bold;color:${brand.light};letter-spacing:0.04em;">Don's Fences &amp; Services</p>
                     <p style="margin:3px 0 0;font-size:11px;color:${brand.mid};">
-                      <a href="https://maps.google.com/?q=67+Enderby+Mabel+Lk+Rd+Enderby+BC+V0E+1V4" style="color:${brand.mid};text-decoration:none;">67 Enderby Mabel Lk Rd, Enderby, BC V0E 1V4</a>
+                      <a href="https://maps.google.com/?q=67+Enderby+Mabel+Lk+Rd+Enderby+BC+V0E+1V4" style="color:${brand.mid};text-decoration:underline;">67 Enderby Mabel Lk Rd, Enderby, BC V0E 1V4</a>
                     </p>
                     <p style="margin:2px 0 0;font-size:11px;color:${brand.mid};">
-                      <a href="https://donsfences.ca" style="color:${brand.mid};text-decoration:none;">donsfences.ca</a>
+                      <a href="https://donsfences.ca" style="color:${brand.mid};text-decoration:underline;">donsfences.ca</a>
                     </p>
                   </td>
                   <td style="text-align:right;vertical-align:top;">
@@ -165,7 +165,7 @@ export function buildInvoiceEmailHtml(snapshot: InvoiceSnapshot): string {
           <!-- Notes -->
           ${
             notesSection
-              ? `<tr><td style="padding:0 32px;">${notesSection}</td></tr>`
+              ? `<tr><td style="padding:0 32px 16px;">${notesSection}</td></tr>`
               : ''
           }
 
@@ -174,8 +174,8 @@ export function buildInvoiceEmailHtml(snapshot: InvoiceSnapshot): string {
             <td style="padding:24px 32px;border-top:1px solid ${brand.border};margin-top:28px;text-align:center;">
               <p style="margin:0;font-size:11px;color:${brand.mid};">
                 Don's Fences &amp; Services &middot;
-                <a href="https://maps.google.com/?q=67+Enderby+Mabel+Lk+Rd+Enderby+BC+V0E+1V4" style="color:${brand.mid};text-decoration:none;">67 Enderby Mabel Lk Rd, Enderby, BC V0E 1V4</a>
-                &middot; <a href="https://donsfences.ca" style="color:${brand.mid};text-decoration:none;">donsfences.ca</a>
+                <a href="https://maps.google.com/?q=67+Enderby+Mabel+Lk+Rd+Enderby+BC+V0E+1V4" style="color:${brand.mid};text-decoration:underline;">67 Enderby Mabel Lk Rd, Enderby, BC V0E 1V4</a>
+                &middot; <a href="https://donsfences.ca" style="color:${brand.mid};text-decoration:underline;">donsfences.ca</a>
                 &middot; Thank you for your business
               </p>
             </td>
