@@ -53,17 +53,21 @@ export function SentHistory({ logs }: { logs: InvoiceEmailLog[] }) {
             <div className='flex-1 rounded-md border p-3'>
               <div className='flex flex-wrap items-start justify-between gap-2'>
                 <div>
-                  <Text as='p' size='sm' className='font-medium'>
+                  <Text
+                    as='p'
+                    size='sm'
+                    className='font-medium flex flex-wrap items-center gap-1'
+                  >
                     Sent to {log.recipient_email}
+                    <Badge variant='secondary' className='font-mono'>
+                      status: {log.status}
+                    </Badge>
                   </Text>
                   <Text as='p' size='xs' variant='muted'>
                     {format(new Date(log.sent_at), 'MMM d, yyyy · h:mm a')}
                   </Text>
                 </div>
                 <div className='flex items-center gap-2'>
-                  <Badge variant='secondary' className='text-xs'>
-                    {log.status}
-                  </Badge>
                   <Button variant='outline' size='sm' onClick={() => openSnapshot(log)}>
                     <FileText />
                     View snapshot
