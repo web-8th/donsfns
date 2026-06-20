@@ -14,7 +14,7 @@
   }
 
   .nb-padding-authed {
-    @apply pt-24;
+    @apply lg:pt-24;
   }
 
   .fade-in-from-bottom {
