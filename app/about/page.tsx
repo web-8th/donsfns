@@ -4,7 +4,7 @@ import { AboutHero } from '@/components/about/AboutHero';
 import { ExperienceHighlights } from '@/components/about/ExperienceHighlights';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About Don — Fence Contractor Since 2002',
   description:
     "Don's Fences & Services — fencing the BC interior since 2002. Highway, farm, and forestry projects across Enderby, Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.",
   keywords: [

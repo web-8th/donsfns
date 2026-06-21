@@ -5,7 +5,7 @@ import { Text } from '@/components/Text';
 import { getDelayClass } from '@/utils/animations';
 
 export const metadata: Metadata = {
-  title: 'Gallery',
+  title: 'Fence Installation Gallery — BC Interior',
   description:
     "Photos of fence installations completed by Don's Fences & Services across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, and the BC interior.",
   keywords: [

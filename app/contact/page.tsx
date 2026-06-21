@@ -22,6 +22,14 @@ export const metadata: Metadata = {
     title: "Contact | Don's Fences & Services",
     description:
       'Get a free fence installation quote for Enderby, Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm. Call (250) 306-5064.',
+    images: [
+      {
+        url: '/don_3.jpg',
+        width: 1200,
+        height: 630,
+        alt: "Don's Fences & Services — fence contractor in Enderby, BC",
+      },
+    ],
   },
 };
 

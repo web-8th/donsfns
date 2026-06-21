@@ -24,6 +24,7 @@ export function AboutTeaser() {
 
           <div className='flex flex-col gap-6'>
             <Text
+              as='h2'
               variant='hd-xxl'
               className={`fade-in-from-right ${getDelayClass(1)} font-display
                 tracking-wide`}

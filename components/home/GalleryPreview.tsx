@@ -16,6 +16,7 @@ export function GalleryPreview() {
     <section className='mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'>
       <div className='mb-10 text-center'>
         <Text
+          as='h2'
           variant='hd-xxl'
           className='fade-in-from-bottom mb-3 font-display tracking-wide'
         >

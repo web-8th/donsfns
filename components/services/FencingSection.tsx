@@ -38,6 +38,7 @@ export function FencingSection() {
               Flagship Service
             </Badge>
             <Text
+              as='h2'
               variant='hd-xxl'
               className={`fade-in-from-bottom ${getDelayClass(2)} mb-4 font-display
                 tracking-wide`}

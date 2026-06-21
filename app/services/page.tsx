@@ -6,7 +6,7 @@ import { Text } from '@/components/Text';
 import { getDelayClass } from '@/utils/animations';
 
 export const metadata: Metadata = {
-  title: 'Services',
+  title: 'Fence Installation & Services — Enderby BC',
   description:
     'Fencing & gates, wood milling, automotive, cold storage rental, and BC billboard installation in Enderby, BC. Serving the BC interior — Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.',
   keywords: [
