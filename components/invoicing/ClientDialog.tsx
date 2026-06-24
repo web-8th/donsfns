@@ -136,7 +136,6 @@ export function ClientDialog({ open, onOpenChange, client }: Props) {
                     <Input type='email' placeholder='client@example.com' {...field} />
                   </FormControl>
                   <FormMessage />
-                  
                 </FormItem>
               )}
             />

@@ -21,7 +21,17 @@ function fmtDate(d: string) {
 }
 
 export function buildInvoiceEmailHtml(snapshot: InvoiceSnapshot): string {
-  const { invoice_number, issue_date, line_items, subtotal, tax_rate, tax_amount, total, notes, client } = snapshot;
+  const {
+    invoice_number,
+    issue_date,
+    line_items,
+    subtotal,
+    tax_rate,
+    tax_amount,
+    total,
+    notes,
+    client,
+  } = snapshot;
 
   const taxPct = tax_rate ? (tax_rate * 100).toFixed(0) : '0';
 

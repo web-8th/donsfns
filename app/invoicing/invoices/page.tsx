@@ -7,7 +7,10 @@ export default async function InvoicesPage() {
   const supabase = createAdminClient();
 
   const [{ data }, { data: allLogs }] = await Promise.all([
-    supabase.from('invoices').select('*, clients(*)').order('created_at', { ascending: false }),
+    supabase
+      .from('invoices')
+      .select('*, clients(*)')
+      .order('created_at', { ascending: false }),
     supabase
       .from('invoice_email_log')
       .select('invoice_id, sent_at, recipient_email, snapshot')
@@ -23,7 +26,11 @@ export default async function InvoicesPage() {
     if (!latestLogMap.has(log.invoice_id)) {
       latestLogMap.set(
         log.invoice_id,
-        log as unknown as { sent_at: string; recipient_email: string; snapshot: InvoiceSnapshot }
+        log as unknown as {
+          sent_at: string;
+          recipient_email: string;
+          snapshot: InvoiceSnapshot;
+        }
       );
     }
   }

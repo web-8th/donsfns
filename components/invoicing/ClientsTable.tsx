@@ -1,7 +1,7 @@
 ﻿'use client';
 
-import { Pencil, Plus, Trash2 } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { Pencil, Plus, Trash2, X } from 'lucide-react';
+import { useMemo, useState, useTransition } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -18,6 +18,14 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/Text';
 import {
@@ -37,6 +45,8 @@ import {
 
 import { ClientDialog } from './ClientDialog';
 
+type SearchBy = 'name' | 'email' | 'phone';
+
 export function ClientsTable({ clients }: { clients: Client[] }) {
   const router = useRouter();
   const { toast } = useToast();
@@ -44,6 +54,30 @@ export function ClientsTable({ clients }: { clients: Client[] }) {
   const [editTarget, setEditTarget] = useState<Client | undefined>();
   const [deleteTarget, setDeleteTarget] = useState<Client | undefined>();
   const [isPending, startTransition] = useTransition();
+  const [searchBy, setSearchBy] = useState<SearchBy>('name');
+  const [searchValue, setSearchValue] = useState('');
+
+  const hasSearch = searchValue.trim() !== '';
+
+  const filtered = useMemo(() => {
+    if (!hasSearch) return clients;
+    const q = searchValue.trim().toLowerCase();
+    return clients.filter((c) => {
+      if (searchBy === 'name') return c.name.toLowerCase().includes(q);
+      if (searchBy === 'email') return (c.email ?? '').toLowerCase().includes(q);
+      if (searchBy === 'phone') return (c.phone ?? '').toLowerCase().includes(q);
+      return true;
+    });
+  }, [clients, searchBy, searchValue, hasSearch]);
+
+  function handleSearchByChange(v: string) {
+    setSearchBy(v as SearchBy);
+    setSearchValue('');
+  }
+
+  function clearSearch() {
+    setSearchValue('');
+  }
 
   function openCreate() {
     setEditTarget(undefined);
@@ -74,17 +108,59 @@ export function ClientsTable({ clients }: { clients: Client[] }) {
 
   return (
     <>
-      <div className='mb-4 flex items-center justify-between'>
-        <Text size='sm' variant='muted'>
-          {clients.length} client{clients.length !== 1 ? 's' : ''}
-        </Text>
-        <Button size='sm' onClick={openCreate}>
-          <Plus className='mr-1.5 h-4 w-4' />
-          New Client
-        </Button>
+      <div className='space-y-4'>
+        <div className='flex items-center gap-2'>
+          <Select value={searchBy} onValueChange={handleSearchByChange}>
+            <SelectTrigger className='w-32'>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='name'>Name</SelectItem>
+              <SelectItem value='email'>Email</SelectItem>
+              <SelectItem value='phone'>Phone</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className='relative flex-1'>
+            <Input
+              placeholder={
+                searchBy === 'name'
+                  ? 'Search by name…'
+                  : searchBy === 'email'
+                    ? 'Search by email…'
+                    : 'Search by phone…'
+              }
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+            {hasSearch && (
+              <Button
+                variant='ghost'
+                size='icon'
+                className='absolute right-1 top-1/2 h-7 w-7 -translate-y-1/2
+                  text-muted-foreground hover:text-foreground'
+                onClick={clearSearch}
+              >
+                <X className='h-3.5 w-3.5' />
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div className='flex items-center justify-between'>
+          <Text size='sm' variant='muted'>
+            {hasSearch
+              ? `${filtered.length} of ${clients.length} client${clients.length !== 1 ? 's' : ''}`
+              : `${clients.length} client${clients.length !== 1 ? 's' : ''}`}
+          </Text>
+          <Button size='sm' onClick={openCreate}>
+            <Plus className='mr-1.5 h-4 w-4' />
+            New Client
+          </Button>
+        </div>
       </div>
 
-      <div className='rounded-md border'>
+      <div className='mt-4 rounded-md border'>
         <Table>
           <TableHeader>
             <TableRow>
@@ -106,7 +182,17 @@ export function ClientsTable({ clients }: { clients: Client[] }) {
                 </TableCell>
               </TableRow>
             )}
-            {clients.map((c) => (
+            {filtered.length === 0 && clients.length > 0 && (
+              <TableRow>
+                <TableCell
+                  colSpan={5}
+                  className='py-10 text-center text-muted-foreground'
+                >
+                  No clients match your search.
+                </TableCell>
+              </TableRow>
+            )}
+            {filtered.map((c) => (
               <TableRow key={c.id}>
                 <TableCell className='font-medium'>{c.name}</TableCell>
                 <TableCell>{c.email}</TableCell>

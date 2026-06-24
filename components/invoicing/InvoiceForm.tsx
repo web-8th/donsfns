@@ -22,17 +22,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 import { Text } from '@/components/Text';
+
+import { ClientCombobox } from './ClientCombobox';
 
 const lineItemSchema = z.object({
   description: z.string().min(1, 'Required'),
@@ -127,7 +122,9 @@ export function InvoiceForm({ clients, invoice }: Props) {
         });
         const result = await res.json();
         if (result.error) {
-          form.setError('root', { message: 'Something went wrong. Please try again or refresh.' });
+          form.setError('root', {
+            message: 'Something went wrong. Please try again or refresh.',
+          });
           toast.error('Something went wrong. Please try again or refresh.');
           return;
         }
@@ -141,7 +138,9 @@ export function InvoiceForm({ clients, invoice }: Props) {
         });
         const result = await res.json();
         if (result.error) {
-          form.setError('root', { message: 'Something went wrong. Please try again or refresh.' });
+          form.setError('root', {
+            message: 'Something went wrong. Please try again or refresh.',
+          });
           toast.error('Something went wrong. Please try again or refresh.');
           return;
         }
@@ -169,20 +168,13 @@ export function InvoiceForm({ clients, invoice }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Client</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className='w-full'>
-                      <SelectValue placeholder='Select client…' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {clients.map((c) => (
-                      <SelectItem key={c.id} value={c.id}>
-                        {c.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <FormControl>
+                  <ClientCombobox
+                    clients={clients}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -280,129 +272,130 @@ export function InvoiceForm({ clients, invoice }: Props) {
 
           <div className='overflow-x-auto border'>
             <div className='min-w-[540px]'>
-            <div
-              className='grid grid-cols-[3fr_1fr_1.5fr_1.5fr_40px] gap-px bg-border
-                text-xs font-medium uppercase tracking-wide text-muted-foreground'
-            >
-              {['Description', 'Qty', 'Rate', 'Amount', ''].map((h) => (
-                <div key={h} className='bg-muted/50 px-3 py-2'>
-                  {h}
+              <div
+                className='grid grid-cols-[3fr_1fr_1.5fr_1.5fr_40px] gap-px bg-border
+                  text-xs font-medium uppercase tracking-wide text-muted-foreground'
+              >
+                {['Description', 'Qty', 'Rate', 'Amount', ''].map((h) => (
+                  <div key={h} className='bg-muted/50 px-3 py-2'>
+                    {h}
+                  </div>
+                ))}
+              </div>
+
+              {fields.map((field, i) => (
+                <div
+                  key={field.id}
+                  className='grid grid-cols-[3fr_1fr_1.5fr_1.5fr_40px] gap-px bg-border'
+                >
+                  <div className='bg-background px-2 py-1.5'>
+                    <FormField
+                      control={form.control}
+                      name={`line_items.${i}.description`}
+                      render={({ field }) => (
+                        <FormItem className='space-y-1'>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder='Description'
+                              className='h-8 border-0 px-1 shadow-none
+                                focus-visible:ring-0'
+                            />
+                          </FormControl>
+                          <FormMessage className='px-1 text-xs' />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className='bg-background px-2 py-1.5'>
+                    <FormField
+                      control={form.control}
+                      name={`line_items.${i}.quantity`}
+                      render={({ field }) => (
+                        <FormItem className='space-y-1'>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              step='1'
+                              min='1'
+                              defaultValue={field.value || 1}
+                              onChange={(e) => {
+                                const n = parseFloat(e.target.value);
+                                if (!isNaN(n)) field.onChange(n);
+                              }}
+                              onBlur={(e) => {
+                                const n = parseFloat(e.target.value) || 1;
+                                field.onChange(n);
+                                e.target.value = String(n);
+                                field.onBlur();
+                              }}
+                              name={field.name}
+                              className='h-8 border-0 px-1 text-right shadow-none
+                                focus-visible:ring-0'
+                            />
+                          </FormControl>
+                          <FormMessage className='px-1 text-xs' />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className='bg-background px-2 py-1.5'>
+                    <FormField
+                      control={form.control}
+                      name={`line_items.${i}.rate`}
+                      render={({ field }) => (
+                        <FormItem className='space-y-1'>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              step='1'
+                              min='0'
+                              defaultValue={field.value ?? 0}
+                              onChange={(e) => {
+                                const n = parseFloat(e.target.value);
+                                if (!isNaN(n)) field.onChange(n);
+                              }}
+                              onBlur={(e) => {
+                                const n = parseFloat(e.target.value) || 0;
+                                field.onChange(n);
+                                e.target.value = String(n);
+                                field.onBlur();
+                              }}
+                              name={field.name}
+                              className='h-8 border-0 px-1 text-right shadow-none
+                                focus-visible:ring-0'
+                            />
+                          </FormControl>
+                          <FormMessage className='px-1 text-xs' />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className='bg-background px-2 py-1.5'>
+                    <Text
+                      as='p'
+                      size='sm'
+                      variant='muted'
+                      className='flex h-8 items-center justify-end pr-1'
+                    >
+                      ${(lineItems?.[i]?.amount ?? 0).toFixed(2)}
+                    </Text>
+                  </div>
+                  <div className='flex items-center justify-center bg-background'>
+                    <Button
+                      disabled={fields.length === 1}
+                      type='button'
+                      variant='outline'
+                      size='icon'
+                      className='h-7 w-7 text-muted-foreground hover:text-destructive'
+                      onClick={() => remove(i)}
+                    >
+                      <X className='h-3.5 w-3.5' />
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
-
-            {fields.map((field, i) => (
-              <div
-                key={field.id}
-                className='grid grid-cols-[3fr_1fr_1.5fr_1.5fr_40px] gap-px bg-border'
-              >
-                <div className='bg-background px-2 py-1.5'>
-                  <FormField
-                    control={form.control}
-                    name={`line_items.${i}.description`}
-                    render={({ field }) => (
-                      <FormItem className='space-y-1'>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder='Description'
-                            className='h-8 border-0 px-1 shadow-none focus-visible:ring-0'
-                          />
-                        </FormControl>
-                        <FormMessage className='px-1 text-xs' />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className='bg-background px-2 py-1.5'>
-                  <FormField
-                    control={form.control}
-                    name={`line_items.${i}.quantity`}
-                    render={({ field }) => (
-                      <FormItem className='space-y-1'>
-                        <FormControl>
-                          <Input
-                            type='number'
-                            step='1'
-                            min='1'
-                            defaultValue={field.value || 1}
-                            onChange={(e) => {
-                              const n = parseFloat(e.target.value);
-                              if (!isNaN(n)) field.onChange(n);
-                            }}
-                            onBlur={(e) => {
-                              const n = parseFloat(e.target.value) || 1;
-                              field.onChange(n);
-                              e.target.value = String(n);
-                              field.onBlur();
-                            }}
-                            name={field.name}
-                            className='h-8 border-0 px-1 text-right shadow-none
-                              focus-visible:ring-0'
-                          />
-                        </FormControl>
-                        <FormMessage className='px-1 text-xs' />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className='bg-background px-2 py-1.5'>
-                  <FormField
-                    control={form.control}
-                    name={`line_items.${i}.rate`}
-                    render={({ field }) => (
-                      <FormItem className='space-y-1'>
-                        <FormControl>
-                          <Input
-                            type='number'
-                            step='1'
-                            min='0'
-                            defaultValue={field.value ?? 0}
-                            onChange={(e) => {
-                              const n = parseFloat(e.target.value);
-                              if (!isNaN(n)) field.onChange(n);
-                            }}
-                            onBlur={(e) => {
-                              const n = parseFloat(e.target.value) || 0;
-                              field.onChange(n);
-                              e.target.value = String(n);
-                              field.onBlur();
-                            }}
-                            name={field.name}
-                            className='h-8 border-0 px-1 text-right shadow-none
-                              focus-visible:ring-0'
-                          />
-                        </FormControl>
-                        <FormMessage className='px-1 text-xs' />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className='bg-background px-2 py-1.5'>
-                  <Text
-                    as='p'
-                    size='sm'
-                    variant='muted'
-                    className='flex h-8 items-center justify-end pr-1'
-                  >
-                    ${(lineItems?.[i]?.amount ?? 0).toFixed(2)}
-                  </Text>
-                </div>
-                <div className='flex items-center justify-center bg-background'>
-                  <Button
-                    disabled={fields.length === 1}
-                    type='button'
-                    variant='outline'
-                    size='icon'
-                    className='h-7 w-7 text-muted-foreground hover:text-destructive'
-                    onClick={() => remove(i)}
-                  >
-                    <X className='h-3.5 w-3.5' />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
           </div>
 
           {(lineItemArrayError || hasFieldErrors) && (
