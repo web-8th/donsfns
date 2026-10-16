@@ -34,7 +34,7 @@ export function HeroSection() {
           className={`fade-in-from-bottom ${getDelayClass(2)} font-display mb-6
             leading-none tracking-wide text-white text-6xl md:text-7xl lg:text-9xl`}
         >
-          Don's Fences
+          Don&apos;s Fences
           <br />& Services
         </Text>
 
@@ -45,8 +45,9 @@ export function HeroSection() {
           className={`fade-in-from-bottom ${getDelayClass(4)} mx-auto mb-6 max-w-2xl
             italic leading-relaxed text-white/90`}
         >
-          "If you don't have <span className='font-bold'>Don's Fences</span>, you don't
-          have a fence."
+          &quot;If you don&apos;t have{' '}
+          <span className='font-bold'>Don&apos;s Fences</span>, you don&apos;t have a
+          fence.&quot;
         </Text>
 
         <div

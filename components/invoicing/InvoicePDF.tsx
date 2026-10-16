@@ -232,7 +232,7 @@ export function InvoicePDF({ snapshot }: { snapshot: InvoiceSnapshot }) {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.companyName}>Don's Fences & Services</Text>
+            <Text style={styles.companyName}>Don&apos;s Fences & Services</Text>
             <Link src='https://maps.google.com/?q=67+Enderby+Mabel+Lk+Rd+Enderby+BC+V0E+1V4'>
               <Text style={styles.companyTagline}>
                 67 Enderby Mabel Lk Rd, Enderby, BC V0E 1V4
@@ -307,7 +307,7 @@ export function InvoicePDF({ snapshot }: { snapshot: InvoiceSnapshot }) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don's Fences & Services · </Text>
+          <Text style={styles.footerText}>Don&apos;s Fences & Services · </Text>
           <Link src='https://maps.google.com/?q=67+Enderby+Mabel+Lk+Rd+Enderby+BC+V0E+1V4'>
             <Text style={styles.footerText}>
               67 Enderby Mabel Lk Rd, Enderby, BC V0E 1V4

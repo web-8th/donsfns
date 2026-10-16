@@ -36,17 +36,17 @@ export function AboutTeaser() {
               variant='muted'
               className={`fade-in-from-right ${getDelayClass(3)}`}
             >
-              I'm Don. I've been building fences in the BC interior since 2002 — from
-              highway barriers and BC Parks projects to ranch fences and residential gates
-              across the Okanagan.
+              I&apos;m Don. I&apos;ve been building fences in the BC interior since 2002 —
+              from highway barriers and BC Parks projects to ranch fences and residential
+              gates across the Okanagan.
             </Text>
             <Text
               size='lg'
               variant='muted'
               className={`fade-in-from-right ${getDelayClass(4)}`}
             >
-              If something's off by a centimeter, we fix it. That's not a slogan — it's
-              just how I work.
+              If something&apos;s off by a centimeter, we fix it. That&apos;s not a slogan
+              — it&apos;s just how I work.
             </Text>
             <Button
               asChild
