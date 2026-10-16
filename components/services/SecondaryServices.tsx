@@ -47,7 +47,7 @@ export function SecondaryServices() {
             size='lg'
             className={`fade-in-from-bottom ${getDelayClass(1)}`}
           >
-            Fencing is what I'm known for. These are the other ways I can help.
+            Fencing is what I&apos;m known for. These are the other ways I can help.
           </Text>
         </div>
 

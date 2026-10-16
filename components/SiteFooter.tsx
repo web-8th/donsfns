@@ -28,8 +28,8 @@ export function SiteFooter() {
               />
             </Link>
             <Text size='sm' variant='muted' className='max-w-xs'>
-              If you don't have <span className='font-bold'>Don's Fences</span>, you don't
-              have a fence.
+              If you don&apos;t have <span className='font-bold'>Don&apos;s Fences</span>,
+              you don&apos;t have a fence.
             </Text>
             <Text size='sm' variant='muted'>
               Enderby, BC · Serving the BC Interior
@@ -92,7 +92,7 @@ export function SiteFooter() {
               sm:justify-between'
           >
             <Text size='sm' variant='muted'>
-              © {new Date().getFullYear()} Don's Fences & Services · donsfences.ca
+              © {new Date().getFullYear()} Don&apos;s Fences & Services · donsfences.ca
             </Text>
             <Text size='sm' variant='muted'>
               Enderby · Vernon · Armstrong · Lake Country · Kelowna · Salmon Arm

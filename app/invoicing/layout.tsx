@@ -23,7 +23,7 @@ export default async function InvoicingLayout({
           Invoicing
         </Text>
         <Text variant='muted' size='sm' className='mt-1'>
-          Don's Fences & Services — internal billing tool
+          Don&apos;s Fences & Services — internal billing tool
         </Text>
       </div>
       <InvoicingNav />

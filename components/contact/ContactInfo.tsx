@@ -23,7 +23,7 @@ export function ContactInfo() {
           Get in Touch
         </Text>
         <Text variant='muted'>
-          Fill out the form and I'll get back to you. No run-around.
+          Fill out the form and I&apos;ll get back to you. No run-around.
         </Text>
       </div>
 
