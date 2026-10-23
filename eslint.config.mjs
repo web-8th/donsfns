@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     'next-env.d.ts',
     // shadcn/ui components are generated and updated via the shadcn CLI
     'components/ui/**',
+    'hooks/use-mobile.ts',
   ]),
 ]);
 
