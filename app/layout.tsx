@@ -64,7 +64,7 @@ export const metadata: Metadata = {
       { url: '/favicon.ico' },
     ],
     shortcut: '/dons_fences_logo_1x1.svg',
-    apple: '/dons_fences_logo_1x1.svg',
+    apple: '/apple-touch-icon.png',
   },
   authors: [{ name: "Don's Fences & Services", url: 'https://donsfences.ca' }],
   creator: "Don's Fences & Services",

@@ -22,9 +22,9 @@ export function SiteFooter() {
               <Image
                 src='/dons_fences_logo_horizontal.svg'
                 alt="Don's Fences & Services"
-                width={200}
-                height={50}
-                className='h-14 w-auto'
+                width={3150}
+                height={1037}
+                className='h-20 w-auto dark:invert'
               />
             </Link>
             <Text size='sm' variant='muted' className='max-w-xs'>
