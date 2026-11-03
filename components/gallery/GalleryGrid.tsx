@@ -17,6 +17,7 @@ const images = [
   { src: '/don_12.jpg', alt: 'Ranch fencing with horse inside' },
   { src: '/don_13.jpg', alt: 'Fence installation in farm' },
   { src: '/don_14.jpg', alt: 'Fence installation with support' },
+  { src: '/don_15.jpg', alt: 'Woven wire fence line running along a mowed pasture edge' },
 ];
 
 const breakpointCols = {
