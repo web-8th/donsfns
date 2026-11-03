@@ -13,9 +13,9 @@ export function Logo({ onClick, className }: LogoProps) {
       <Image
         src='/dons_fences_logo_horizontal.svg'
         alt="Don's Fences & Services"
-        width={200}
-        height={50}
-        className='h-14 w-auto'
+        width={1000}
+        height={1357}
+        className='h-16 w-auto dark:invert'
       />
     </Link>
   );
