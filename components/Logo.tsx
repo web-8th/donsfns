@@ -11,11 +11,11 @@ export function Logo({ onClick, className }: LogoProps) {
   return (
     <Link href='/' className={cn('flex items-center', className)} onClick={onClick}>
       <Image
-        src='/dons_fences_logo_1x1.svg'
+        src='/dons_fences_logo_horizontal.svg'
         alt="Don's Fences & Services"
-        width={1200}
-        height={1200}
-        className='h-14 w-14 dark:invert'
+        width={3150}
+        height={1037}
+        className='h-14 w-auto dark:invert'
       />
     </Link>
   );
