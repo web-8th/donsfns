@@ -6,15 +6,15 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { ServicesPreview } from '@/components/home/ServicesPreview';
 
 export const metadata: Metadata = {
-  title: "Don's Fences & Services | Fence Contractor Enderby BC",
+  title: "Don's Fences & Services | Fence Contractor Okanagan & Kamloops BC",
   description:
-    "Don's Fences & Services — fence contractor in Enderby, BC since 2002. Ranch, highway, farm, and residential fencing across Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.",
+    "Don's Fences & Services — fence contractor in Enderby, BC since 2002. Ranch, highway, farm, and residential fencing across the Okanagan and Kamloops.",
   alternates: { canonical: 'https://donsfences.ca' },
   openGraph: {
     url: 'https://donsfences.ca',
-    title: "Don's Fences & Services | Fence Contractor Enderby BC",
+    title: "Don's Fences & Services | Fence Contractor Okanagan & Kamloops BC",
     description:
-      "Don's Fences & Services — fence contractor in Enderby, BC since 2002. Highway, ranch, and residential fencing across the BC interior.",
+      "Don's Fences & Services — fence contractor in Enderby, BC since 2002. Highway, ranch, and residential fencing across the Okanagan and Kamloops.",
   },
 };
 

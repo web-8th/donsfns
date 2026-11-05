@@ -35,11 +35,11 @@ const bebasNeue = Bebas_Neue({
 export const metadata: Metadata = {
   metadataBase: new URL('https://donsfences.ca'),
   title: {
-    default: "Don's Fences & Services | Fence Contractor Enderby BC",
+    default: "Don's Fences & Services | Fence Contractor Okanagan & Kamloops BC",
     template: "%s | Don's Fences & Services",
   },
   description:
-    'Fence contractor based in Enderby, BC — serving the BC interior since 2002. Ranch, highway, farm, and residential fencing across Vernon, Kelowna, Salmon Arm, and beyond.',
+    'Fence contractor based in Enderby, BC — serving the Okanagan and Kamloops since 2002. Ranch, highway, farm, and residential fencing across Vernon, Kelowna, Salmon Arm, and Kamloops.',
   keywords: [
     'fence contractor Enderby BC',
     'fence installation Enderby BC',
@@ -47,6 +47,8 @@ export const metadata: Metadata = {
     'fence installation Vernon BC',
     'fence installation Kelowna BC',
     'fence installation Salmon Arm BC',
+    'fence installation Kamloops BC',
+    'fence contractor Okanagan',
     'fence installation Armstrong BC',
     'fence installation Lake Country BC',
     'ranch fencing BC interior',
@@ -85,9 +87,9 @@ export const metadata: Metadata = {
     locale: 'en_CA',
     url: 'https://donsfences.ca',
     siteName: "Don's Fences & Services",
-    title: "Don's Fences & Services | Fence Contractor Enderby BC",
+    title: "Don's Fences & Services | Fence Contractor Okanagan & Kamloops BC",
     description:
-      'Fence contractor based in Enderby, BC — serving the BC interior since 2002. Ranch, highway, farm, and residential fencing across Vernon, Kelowna, Salmon Arm, and beyond.',
+      'Fence contractor based in Enderby, BC — serving the Okanagan and Kamloops since 2002. Ranch, highway, farm, and residential fencing across Vernon, Kelowna, Salmon Arm, and Kamloops.',
     images: [
       {
         url: '/don_3.jpg',
@@ -99,9 +101,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Don's Fences & Services | Fence Contractor Enderby BC",
+    title: "Don's Fences & Services | Fence Contractor Okanagan & Kamloops BC",
     description:
-      'Fence contractor based in Enderby, BC — serving the BC interior since 2002. Ranch, highway, farm, and residential fencing.',
+      'Fence contractor based in Enderby, BC — serving the Okanagan and Kamloops since 2002. Ranch, highway, farm, and residential fencing.',
     images: ['/don_3.jpg'],
   },
 };
@@ -126,7 +128,7 @@ const jsonLd = {
   email: 'doncookbc@yahoo.ca',
   foundingDate: '2002',
   description:
-    'Fence contractor based in Enderby, BC. Serving the BC interior since 2002 — ranch, highway, farm, and residential fencing across Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.',
+    'Fence contractor based in Enderby, BC. Serving the Okanagan and Kamloops since 2002 — ranch, highway, farm, and residential fencing across Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, and Kamloops.',
   image: 'https://donsfences.ca/don_3.jpg',
   logo: 'https://donsfences.ca/dons_fences_logo_1x1.svg',
   priceRange: '$$',
@@ -148,7 +150,8 @@ const jsonLd = {
     { '@type': 'City', name: 'Lake Country' },
     { '@type': 'City', name: 'Kelowna' },
     { '@type': 'City', name: 'Salmon Arm' },
-    { '@type': 'AdministrativeArea', name: 'BC Interior' },
+    { '@type': 'City', name: 'Kamloops' },
+    { '@type': 'AdministrativeArea', name: 'Okanagan' },
   ],
   serviceType: [
     'Fence Installation',
@@ -171,7 +174,7 @@ const jsonLd = {
           '@type': 'Service',
           name: 'Fencing & Gates',
           description:
-            'Ranch, farm, highway, residential, and custom gate installation across the BC interior.',
+            'Ranch, farm, highway, residential, and custom gate installation across the Okanagan and Kamloops.',
         },
       },
       {

@@ -12,7 +12,7 @@ const serviceAreas = [
   'Lake Country',
   'Kelowna',
   'Salmon Arm',
-  'BC Interior',
+  'Kamloops',
 ];
 
 export function ContactInfo() {

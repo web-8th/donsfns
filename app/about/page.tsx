@@ -6,7 +6,7 @@ import { ExperienceHighlights } from '@/components/about/ExperienceHighlights';
 export const metadata: Metadata = {
   title: 'About Don — Fence Contractor Since 2002',
   description:
-    "Don's Fences & Services — fencing the BC interior since 2002. Highway, farm, and forestry projects across Enderby, Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.",
+    "Don's Fences & Services — fencing the Okanagan and Kamloops since 2002. Highway, farm, and forestry projects across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, and Kamloops.",
   keywords: [
     'about Don fencing Enderby',
     'BC fencing contractor since 2002',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: 'https://donsfences.ca/about',
     title: "About | Don's Fences & Services",
     description:
-      'Fencing the BC interior since 2002. Highway, farm, and forestry projects across Enderby, Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm.',
+      'Fencing the Okanagan and Kamloops since 2002. Highway, farm, and forestry projects across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, and Kamloops.',
     images: [
       {
         url: '/don_1.jpg',
