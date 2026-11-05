@@ -36,9 +36,9 @@ export function AboutTeaser() {
               variant='muted'
               className={`fade-in-from-right ${getDelayClass(3)}`}
             >
-              I&apos;m Don. I&apos;ve been building fences in the BC interior since 2002 —
+              I&apos;m Don. I&apos;ve been building fences in the Okanagan since 2002 —
               from highway barriers and BC Parks projects to ranch fences and residential
-              gates across the Okanagan.
+              gates across the Okanagan, Kamloops, and Revelstoke.
             </Text>
             <Text
               size='lg'

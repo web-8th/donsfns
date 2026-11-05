@@ -5,9 +5,9 @@ import { Text } from '@/components/Text';
 import { getDelayClass } from '@/utils/animations';
 
 export const metadata: Metadata = {
-  title: 'Fence Installation Gallery — BC Interior',
+  title: 'Fence Installation Gallery — Okanagan & Kamloops BC',
   description:
-    "Photos of fence installations completed by Don's Fences & Services across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, and the BC interior.",
+    "Photos of fence installations completed by Don's Fences & Services across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, Kamloops, and Revelstoke.",
   keywords: [
     'fence photos BC',
     'fencing gallery Okanagan',
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     url: 'https://donsfences.ca/gallery',
     title: "Gallery | Don's Fences & Services",
     description:
-      "Fence installations across Enderby, Vernon, Armstrong, Lake Country, Kelowna, and Salmon Arm by Don's Fences & Services.",
+      "Fence installations across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm, Kamloops, and Revelstoke by Don's Fences & Services.",
     images: [
       {
         url: '/don_5.jpg',
         width: 1200,
         height: 630,
-        alt: 'Ranch fence in the BC interior',
+        alt: 'Ranch fence in the Okanagan, BC',
       },
     ],
   },
@@ -47,8 +47,7 @@ export default function GalleryPage() {
           size='lg'
           className={`mt-2 max-w-xl fade-in-from-bottom ${getDelayClass(2)}`}
         >
-          Work done across Enderby, Vernon, Armstrong, Lake Country, Kelowna, Salmon Arm,
-          and the BC interior.
+          Work done across the Okanagan, Kamloops, and Revelstoke.
         </Text>
       </div>
       <GalleryGrid />

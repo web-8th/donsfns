@@ -12,7 +12,8 @@ const serviceAreas = [
   'Lake Country',
   'Kelowna',
   'Salmon Arm',
-  'BC Interior',
+  'Kamloops',
+  'Revelstoke',
 ];
 
 export function ContactInfo() {

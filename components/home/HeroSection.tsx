@@ -11,7 +11,7 @@ export function HeroSection() {
     <section className='relative flex min-h-svh items-center justify-center'>
       <Image
         src='/don_3.jpg'
-        alt='Fence installation by Don in the BC interior'
+        alt='Fence installation by Don in the Okanagan, BC'
         fill
         className={`object-cover fade-in-opacity ${getDelayClass(1)}`}
         priority
@@ -36,6 +36,16 @@ export function HeroSection() {
         >
           Don&apos;s Fences
           <br />& Services
+        </Text>
+
+        <Text
+          as='p'
+          variant='default'
+          size='xxl'
+          className={`fade-in-from-bottom ${getDelayClass(3)} mb-6 font-bold uppercase
+            tracking-wide text-white`}
+        >
+          Serving the Okanagan, Kamloops & Revelstoke, BC
         </Text>
 
         <Text
