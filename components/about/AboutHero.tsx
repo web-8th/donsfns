@@ -53,10 +53,9 @@ export function AboutHero() {
             variant='muted'
             className={`fade-in-from-right ${getDelayClass(5)}`}
           >
-            Based in Enderby, I serve the Okanagan, Kamloops, and Revelstoke — Vernon,
-            Armstrong, Lake Country, Kelowna, Salmon Arm, and everywhere in between.
-            I&apos;ve worked on projects most contractors won&apos;t touch, and I&apos;ve
-            done them right.
+            Based in Enderby, I serve the Okanagan and Kamloops — Vernon, Armstrong, Lake
+            Country, Kelowna, Salmon Arm, and everywhere in between. I&apos;ve worked on
+            projects most contractors won&apos;t touch, and I&apos;ve done them right.
           </Text>
           <Text
             size='lg'

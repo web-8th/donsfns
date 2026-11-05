@@ -27,7 +27,7 @@ export function GalleryPreview() {
           size='lg'
           className={`fade-in-from-bottom ${getDelayClass(1)} mx-auto max-w-xl`}
         >
-          Fence installations across the Okanagan, Kamloops, and Revelstoke.
+          Fence installations across the Okanagan and Kamloops.
         </Text>
       </div>
 

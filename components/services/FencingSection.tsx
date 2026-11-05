@@ -25,7 +25,7 @@ const highlights = [
   'Fencing since 2002 — 24 years hands-on',
   'BC Parks & highway-scale projects',
   'Precision work — fixed to the centimeter',
-  'Enderby-based, serving the Okanagan, Kamloops & Revelstoke',
+  'Enderby-based, serving the Okanagan & Kamloops',
 ];
 
 export function FencingSection() {
@@ -51,8 +51,8 @@ export function FencingSection() {
               className={`fade-in-from-bottom ${getDelayClass(3)}`}
             >
               From a single residential gate to kilometres of highway barrier — if it
-              needs a fence, I build it right. Based in Enderby, BC, serving the Okanagan,
-              Kamloops, and Revelstoke.
+              needs a fence, I build it right. Based in Enderby, BC, serving the Okanagan
+              and Kamloops.
             </Text>
           </div>
 

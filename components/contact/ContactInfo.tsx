@@ -13,7 +13,6 @@ const serviceAreas = [
   'Kelowna',
   'Salmon Arm',
   'Kamloops',
-  'Revelstoke',
 ];
 
 export function ContactInfo() {

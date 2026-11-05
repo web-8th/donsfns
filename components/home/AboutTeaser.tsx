@@ -38,7 +38,7 @@ export function AboutTeaser() {
             >
               I&apos;m Don. I&apos;ve been building fences in the Okanagan since 2002 —
               from highway barriers and BC Parks projects to ranch fences and residential
-              gates across the Okanagan, Kamloops, and Revelstoke.
+              gates across the Okanagan and Kamloops.
             </Text>
             <Text
               size='lg'

@@ -45,7 +45,7 @@ export function HeroSection() {
           className={`fade-in-from-bottom ${getDelayClass(3)} mb-6 font-bold uppercase
             tracking-wide text-white`}
         >
-          Serving the Okanagan, Kamloops & Revelstoke, BC
+          Serving the Okanagan & Kamloops, BC
         </Text>
 
         <Text

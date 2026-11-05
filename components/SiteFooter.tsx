@@ -32,7 +32,7 @@ export function SiteFooter() {
               you don&apos;t have a fence.
             </Text>
             <Text size='sm' variant='muted'>
-              Enderby, BC · Serving the Okanagan, Kamloops & Revelstoke
+              Enderby, BC · Serving the Okanagan & Kamloops
             </Text>
           </div>
 
@@ -95,7 +95,7 @@ export function SiteFooter() {
               © {new Date().getFullYear()} Don&apos;s Fences & Services · donsfences.ca
             </Text>
             <Text size='sm' variant='muted'>
-              Okanagan · Kamloops · Revelstoke
+              Okanagan · Kamloops
             </Text>
           </div>
 
