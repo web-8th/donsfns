@@ -3,8 +3,8 @@ import { Resend } from 'resend';
 
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY || '');
-  const FROM_EMAIL = process.env.FROM_EMAIL || 'donsfences@web8th.com';
-  const TO_EMAIL = process.env.TO_EMAIL || 'doncookbc@yahoo.ca';
+  const FROM_EMAIL = process.env.FROM_EMAIL || '';
+  const TO_EMAIL = process.env.TO_EMAIL || '';
   const SMS_EMAIL = process.env.SMS_EMAIL || '';
 
   const body = await req.json();
