@@ -10,10 +10,15 @@ export function useAuth() {
   return context;
 }
 
-export async function signInWithEmail(email: string, password: string) {
+export async function signInWithEmail(
+  email: string,
+  password: string,
+  captchaToken?: string
+) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
+    options: { captchaToken },
   });
   return { data, error };
 }

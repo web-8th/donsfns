@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { LogIn, LogOut } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -42,6 +43,8 @@ type LoginValues = z.infer<typeof loginSchema>;
 export function LoginDialog({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const { user, signOut } = useAuth();
   const { toast } = useToast();
 
@@ -56,7 +59,14 @@ export function LoginDialog({ className }: { className?: string }) {
   });
 
   const onSubmit = async (values: LoginValues) => {
-    const { data, error } = await signInWithEmail(values.email, values.password);
+    if (!token) {
+      toast.error('Please complete the verification check.');
+      return;
+    }
+    const { data, error } = await signInWithEmail(values.email, values.password, token);
+    // Tokens are single-use — always get a fresh one
+    turnstileRef.current?.reset();
+    setToken(null);
     if (error) {
       toast.error(error.message);
     } else {
@@ -136,10 +146,17 @@ export function LoginDialog({ className }: { className?: string }) {
                 </FormItem>
               )}
             />
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ''}
+              onSuccess={setToken}
+              onExpire={() => setToken(null)}
+              onError={() => setToken(null)}
+            />
             <Button
               type='submit'
               className='w-full'
-              disabled={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting || !token}
             >
               {form.formState.isSubmitting ? 'Signing in…' : 'Sign in'}
             </Button>
