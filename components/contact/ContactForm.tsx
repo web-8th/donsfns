@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import { CalendarIcon } from 'lucide-react';
 import { z } from 'zod';
 
@@ -52,8 +53,10 @@ const serviceOptions = [
   'Other / Not Sure',
 ];
 
-export function ContactForm() {
+export function ContactForm({ siteKey }: { siteKey: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const { toast } = useToast();
 
   const form = useForm<FormValues>({
@@ -70,6 +73,10 @@ export function ContactForm() {
   });
 
   const onSubmit = async (values: FormValues) => {
+    if (!token) {
+      toast.error('Please complete the verification check.');
+      return;
+    }
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
@@ -77,6 +84,7 @@ export function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          turnstileToken: token,
           preferredDate: values.preferredDate
             ? format(values.preferredDate, 'PPP')
             : undefined,
@@ -90,6 +98,9 @@ export function ContactForm() {
     } catch {
       toast.error('Something went wrong. Try again or call directly.');
     } finally {
+      // Tokens are single-use — always get a fresh one
+      turnstileRef.current?.reset();
+      setToken(null);
       setIsSubmitting(false);
     }
   };
@@ -255,10 +266,18 @@ export function ContactForm() {
           )}
         />
 
+        <Turnstile
+          ref={turnstileRef}
+          siteKey={siteKey}
+          onSuccess={setToken}
+          onExpire={() => setToken(null)}
+          onError={() => setToken(null)}
+        />
+
         <Button
           type='submit'
           size='lg'
-          disabled={isSubmitting}
+          disabled={isSubmitting || !token}
           className={`fade-in-from-bottom ${getDelayClass(6)} self-start`}
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}

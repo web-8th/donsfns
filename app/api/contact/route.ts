@@ -8,7 +8,37 @@ export async function POST(req: Request) {
   const SMS_EMAIL = process.env.SMS_EMAIL || '';
 
   const body = await req.json();
-  const { firstName, lastName, email, phone, service, preferredDate, message } = body;
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    service,
+    preferredDate,
+    message,
+    turnstileToken,
+  } = body;
+
+  const verifyRes = await fetch(
+    'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: process.env.CLOUDFLARE_SECRET_KEY || '',
+        response: turnstileToken || '',
+        remoteip: req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '',
+      }),
+    }
+  ).catch(() => null);
+  const verification = verifyRes ? await verifyRes.json().catch(() => null) : null;
+
+  if (!verification?.success) {
+    return Response.json(
+      { success: false, error: 'Verification failed' },
+      { status: 403 }
+    );
+  }
 
   try {
     await Promise.all([

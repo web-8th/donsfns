@@ -53,7 +53,7 @@ export default function ContactPage() {
       </div>
 
       <div className='grid grid-cols-1 gap-12 lg:grid-cols-2'>
-        <ContactForm />
+        <ContactForm siteKey={process.env.CLOUDFLARE_SITE_KEY ?? ''} />
         <ContactInfo />
       </div>
     </div>
