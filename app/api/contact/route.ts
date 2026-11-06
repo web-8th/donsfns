@@ -3,7 +3,9 @@ import { Resend } from 'resend';
 
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY || '');
+  // email that is sent from
   const FROM_EMAIL = process.env.FROM_EMAIL || 'donsfences@web8th.com';
+  // address that receives the email, which is don's inbox
   const TO_EMAIL = process.env.TO_EMAIL || 'doncookbc@yahoo.ca';
   const SMS_EMAIL = process.env.SMS_EMAIL || '';
 
