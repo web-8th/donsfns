@@ -39,9 +39,8 @@ const schema = z.object({
   email: z.email('Enter a valid email address'),
   phone: z
     .string()
-    .regex(/^\d{10}$/, 'Enter a 10-digit phone number (numbers only)')
-    .or(z.literal(''))
-    .optional(),
+    .min(1, 'Phone number is required')
+    .regex(/^\d{10}$/, 'Enter a 10-digit phone number (numbers only)'),
   service: z.string().min(1, 'Please select a service'),
   preferredDate: z.date().optional(),
   message: z.string().optional(),
@@ -165,12 +164,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
           name='phone'
           render={({ field }) => (
             <FormItem className={`fade-in-from-bottom ${getDelayClass(2)}`}>
-              <FormLabel>
-                Phone{' '}
-                <Text as='span' size='sm' variant='muted' className='font-normal'>
-                  (optional)
-                </Text>
-              </FormLabel>
+              <FormLabel>Phone</FormLabel>
               <FormControl>
                 <Input
                   type='tel'
