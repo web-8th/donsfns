@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY || '');
   const FROM_EMAIL = process.env.FROM_EMAIL || '';
   const TO_EMAIL = process.env.TO_EMAIL || '';
-  const SMS_EMAIL = process.env.SMS_EMAIL || '';
+  const SMS_EMAIL = process.env.SMS_EMAIL;
 
   const body = await req.json();
   const {
@@ -18,6 +18,13 @@ export async function POST(req: Request) {
     message,
     turnstileToken,
   } = body;
+
+  if (phone && !/^\d{10}$/.test(phone)) {
+    return Response.json(
+      { success: false, error: 'Invalid phone number' },
+      { status: 400 }
+    );
+  }
 
   const verifyRes = await fetch(
     'https://challenges.cloudflare.com/turnstile/v0/siteverify',
@@ -38,6 +45,22 @@ export async function POST(req: Request) {
       { success: false, error: 'Verification failed' },
       { status: 403 }
     );
+  }
+
+  if (SMS_EMAIL) {
+    try {
+      // Resend returns { data, error } instead of throwing on API failures
+      const { data, error } = await resend.emails.send({
+        from: `Don's Fences <${FROM_EMAIL}>`,
+        to: SMS_EMAIL,
+        subject: 'New quote',
+        text: `${firstName} ${lastName} - ${service}. Call ${phone || email}. Details in email. Do not reply here.`,
+      });
+      if (error) console.error('SMS gateway send rejected:', error);
+      else console.log('SMS gateway email queued:', data?.id);
+    } catch (error) {
+      console.error('Error sending SMS:', error);
+    }
   }
 
   try {

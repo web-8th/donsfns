@@ -37,7 +37,11 @@ const schema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.email('Enter a valid email address'),
-  phone: z.string().optional(),
+  phone: z
+    .string()
+    .regex(/^\d{10}$/, 'Enter a 10-digit phone number (numbers only)')
+    .or(z.literal(''))
+    .optional(),
   service: z.string().min(1, 'Please select a service'),
   preferredDate: z.date().optional(),
   message: z.string().optional(),
@@ -61,6 +65,8 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
+    mode: 'onSubmit',
+    reValidateMode: 'onBlur',
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -166,7 +172,14 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
                 </Text>
               </FormLabel>
               <FormControl>
-                <Input type='tel' placeholder='XXX-XXX-XXX' {...field} />
+                <Input
+                  type='tel'
+                  inputMode='numeric'
+                  maxLength={10}
+                  placeholder='XXXXXXXXXX'
+                  {...field}
+                  onChange={(e) => field.onChange(e.target.value.replace(/\D/g, ''))}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
