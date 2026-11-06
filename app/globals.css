@@ -13,10 +13,6 @@
     @apply py-24;
   }
 
-  .nb-padding-authed {
-    @apply lg:pt-24;
-  }
-
   .fade-in-from-bottom {
     @apply animate-in slide-in-from-bottom-20 fade-in fill-mode-both duration-500;
   }

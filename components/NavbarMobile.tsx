@@ -1,11 +1,16 @@
 'use client';
 
-import { ArrowRight, Menu, Receipt } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, Receipt } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import {
   Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Separator,
   Sheet,
   SheetContent,
@@ -56,45 +61,78 @@ export function NavbarMobile({ open, onOpenChange }: NavbarMobileProps) {
             </SheetTitle>
           </SheetHeader>
           <div className='mt-6 flex flex-col items-center gap-4 pb-8'>
-            {navLinks.map((link, index) => (
+            {user ? (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant={
+                        navLinks.some((link) => link.href === pathname)
+                          ? 'secondary'
+                          : 'outline'
+                      }
+                      className={`w-1/2 fade-in-from-right ${getDelayClass(2)}`}
+                    >
+                      Pages <ChevronDown className='h-4 w-4' />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align='center'>
+                    {navLinks.map((link) => (
+                      <DropdownMenuItem key={link.href} asChild>
+                        <Link href={link.href} onClick={() => onOpenChange(false)}>
+                          {link.label}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href='/contact' onClick={() => onOpenChange(false)}>
+                        Get a Quote <ArrowRight className='ml-auto h-4 w-4' />
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button
+                  variant={pathname.startsWith('/invoicing') ? 'default' : 'outline'}
+                  asChild
+                  className={`w-1/2 fade-in-from-right ${getDelayClass(3)}`}
+                >
+                  <Link href='/invoicing' onClick={() => onOpenChange(false)}>
+                    <Receipt className='h-4 w-4' /> Invoicing
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              navLinks.map((link, index) => (
+                <Button
+                  key={link.href}
+                  variant={pathname === link.href ? 'secondary' : 'outline'}
+                  className={`w-1/2 fade-in-from-right ${getDelayClass(index + 2)}`}
+                  asChild
+                >
+                  <Link href={link.href} onClick={() => onOpenChange(false)}>
+                    {link.label}
+                  </Link>
+                </Button>
+              ))
+            )}
+            {!user && (
               <Button
-                key={link.href}
-                variant={pathname === link.href ? 'secondary' : 'outline'}
-                className={`w-1/2 fade-in-from-right ${getDelayClass(index + 2)}`}
                 asChild
+                className={`w-1/2 bg-accent text-accent-foreground hover:bg-accent/90
+                fade-in-from-right ${getDelayClass(navLinks.length + 2)}`}
               >
-                <Link href={link.href} onClick={() => onOpenChange(false)}>
-                  {link.label}
+                <Link href='/contact' onClick={() => onOpenChange(false)}>
+                  Get a Quote <ArrowRight />
                 </Link>
               </Button>
-            ))}
-            <Button
-              asChild
-              className={`w-1/2 bg-accent text-accent-foreground hover:bg-accent/90
-                fade-in-from-right ${getDelayClass(navLinks.length + 2)}`}
-            >
-              <Link href='/contact' onClick={() => onOpenChange(false)}>
-                Get a Quote <ArrowRight />
-              </Link>
-            </Button>
+            )}
             <ModeToggle
               className={`fade-in-from-right ${getDelayClass(navLinks.length + 3)}`}
             />
             <Separator
               className={`w-full fade-in-from-right ${getDelayClass(navLinks.length + 4)}`}
             />
-            {user && (
-              <Button
-                variant={pathname === '/invoicing' ? 'default' : 'outline'}
-                asChild
-                className={`w-1/2 fade-in-from-right ${getDelayClass( navLinks.length + 5
-                )}`}
-              >
-                <Link href='/invoicing' onClick={() => onOpenChange(false)}>
-                  <Receipt className='h-4 w-4' /> Invoicing
-                </Link>
-              </Button>
-            )}
             <LoginDialog
               className={`fade-in-from-right ${getDelayClass(navLinks.length + 5)}`}
             />

@@ -1,18 +1,24 @@
 'use client';
 
-import { ArrowRight, Receipt } from 'lucide-react';
+import { ArrowRight, ChevronDown, Receipt } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import { Button } from '@/components/ui';
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui';
 import { LoginDialog } from './LoginDialog';
 import { ModeToggle } from './ModeToggle';
 import { Logo } from './Logo';
 import { NavbarMobile } from './NavbarMobile';
 import { useAuth } from '@/hooks/use-auth';
 import { getDelayClass } from '@/utils/animations';
-import { Text } from './Text';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -38,25 +44,69 @@ export function Navbar() {
           />
 
           <div className='hidden items-center gap-4 lg:flex t200e'>
-            {navLinks.map((link, index) => (
+            {user ? (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant={
+                        navLinks.some((link) => link.href === pathname)
+                          ? 'default'
+                          : 'outline'
+                      }
+                      className={`fade-in-from-right ${getDelayClass(2)}`}
+                    >
+                      Pages <ChevronDown className='h-4 w-4' />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align='end'>
+                    {navLinks.map((link) => (
+                      <DropdownMenuItem key={link.href} asChild>
+                        <Link href={link.href}>{link.label}</Link>
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href='/contact'>
+                        Get a Quote <ArrowRight className='ml-auto h-4 w-4' />
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button
+                  variant={pathname.startsWith('/invoicing') ? 'default' : 'outline'}
+                  className={`fade-in-from-right ${getDelayClass(3)}`}
+                  asChild
+                >
+                  <Link href='/invoicing'>
+                    <Receipt className='h-4 w-4' />
+                    Invoicing
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              navLinks.map((link, index) => (
+                <Button
+                  key={link.href}
+                  variant={pathname === link.href ? 'default' : 'outline'}
+                  className={`fade-in-from-right ${getDelayClass(index + 2)}`}
+                  asChild
+                >
+                  <Link href={link.href}>{link.label}</Link>
+                </Button>
+              ))
+            )}
+            {!user && (
               <Button
-                key={link.href}
-                variant={pathname === link.href ? 'default' : 'outline'}
-                className={`fade-in-from-right ${getDelayClass(index + 2)}`}
                 asChild
-              >
-                <Link href={link.href}>{link.label}</Link>
-              </Button>
-            ))}
-            <Button
-              asChild
-              className={`bg-accent text-accent-foreground hover:bg-accent/90
+                className={`bg-accent text-accent-foreground hover:bg-accent/90
                 fade-in-from-right ${getDelayClass(navLinks.length + 2)}`}
-            >
-              <Link href='/contact'>
-                Get a Quote <ArrowRight />
-              </Link>
-            </Button>
+              >
+                <Link href='/contact'>
+                  Get a Quote <ArrowRight />
+                </Link>
+              </Button>
+            )}
             <ModeToggle
               className={`fade-in-from-right ${getDelayClass(navLinks.length + 3)}`}
             />
@@ -71,29 +121,6 @@ export function Navbar() {
 
           <NavbarMobile open={open} onOpenChange={setOpen} />
         </div>
-
-        {/* Invoicing row — desktop only, visible when logged in */}
-        {user && (
-          <div
-            className='fade-in-from-bottom hidden border-t py-2 lg:flex justify-center
-              gap-2 items-center flex-col'
-          >
-            <Text variant='default' size='sm'>
-              Welcome, <span className='font-bold'>Don</span>. What would you like to do
-              today?
-            </Text>
-            <Button
-              variant={pathname === '/invoicing' ? 'default' : 'outline'}
-              size='sm'
-              asChild
-            >
-              <Link href='/invoicing'>
-                <Receipt className='h-4 w-4' />
-                Invoicing
-              </Link>
-            </Button>
-          </div>
-        )}
       </div>
     </nav>
   );
