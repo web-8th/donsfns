@@ -49,13 +49,13 @@ export function NavbarMobile({ open, onOpenChange }: NavbarMobileProps) {
             <span className='sr-only'>Toggle menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side='right' className='w-75 sm:w-100'>
+        <SheetContent side='right' className='w-75 overflow-y-auto sm:w-100'>
           <SheetHeader>
             <SheetTitle>
               <Logo onClick={() => onOpenChange(false)} />
             </SheetTitle>
           </SheetHeader>
-          <div className='mt-6 flex flex-col items-center gap-4'>
+          <div className='mt-6 flex flex-col items-center gap-4 pb-8'>
             {navLinks.map((link, index) => (
               <Button
                 key={link.href}

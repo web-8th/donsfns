@@ -56,11 +56,11 @@ export function LoginDialog({ className }: { className?: string }) {
   });
 
   const onSubmit = async (values: LoginValues) => {
-    const { error } = await signInWithEmail(values.email, values.password);
+    const { data, error } = await signInWithEmail(values.email, values.password);
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success(`Signed in successfully as ${user?.email}`);
+      toast.success(`Signed in successfully as ${data.user?.email ?? values.email}`);
       setOpen(false);
       form.reset();
     }
