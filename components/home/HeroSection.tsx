@@ -41,16 +41,6 @@ export function HeroSection() {
         <Text
           as='p'
           variant='default'
-          size='xxl'
-          className={`fade-in-from-bottom ${getDelayClass(3)} mb-6 font-bold uppercase
-            tracking-wide text-white`}
-        >
-          Serving the Okanagan & Kamloops, BC
-        </Text>
-
-        <Text
-          as='p'
-          variant='default'
           size='xl'
           className={`fade-in-from-bottom ${getDelayClass(4)} mx-auto mb-6 max-w-2xl
             italic leading-relaxed text-white/90`}
