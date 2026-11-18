@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState, type BaseSyntheticEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,6 +44,8 @@ const schema = z.object({
   service: z.string().min(1, 'Please select a service'),
   preferredDate: z.date().optional(),
   message: z.string().optional(),
+  // Honeypot: visually hidden, real users leave it empty
+  website: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -60,6 +62,12 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
+  // Time trap: the server rejects submissions made too soon after the form loads.
+  // performance.now() shares a clock with event.timeStamp (ms since page load).
+  const renderedAt = useRef(0);
+  useEffect(() => {
+    renderedAt.current = performance.now();
+  }, []);
   const { toast } = useToast();
 
   const form = useForm<FormValues>({
@@ -74,10 +82,12 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
       service: '',
       preferredDate: undefined,
       message: '',
+      website: '',
     },
   });
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: FormValues, event?: BaseSyntheticEvent) => {
+    const submittedAt = event?.timeStamp ?? 0;
     if (!token) {
       toast.error('Please complete the verification check.');
       return;
@@ -90,6 +100,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
         body: JSON.stringify({
           ...values,
           turnstileToken: token,
+          formElapsedMs: Math.round(submittedAt - renderedAt.current),
           preferredDate: values.preferredDate
             ? format(values.preferredDate, 'PPP')
             : undefined,
@@ -100,6 +111,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
 
       toast.success("Message sent — I'll be in touch soon.");
       form.reset();
+      renderedAt.current = submittedAt;
     } catch {
       toast.error('Something went wrong. Try again or call directly.');
     } finally {
@@ -112,7 +124,10 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5'>
+      <form
+        onSubmit={(e) => form.handleSubmit(onSubmit)(e)}
+        className='flex flex-col gap-5'
+      >
         <div
           className={`fade-in-from-bottom ${getDelayClass(1)} grid grid-cols-1 gap-4
             sm:grid-cols-2`}
@@ -272,6 +287,26 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
             </FormItem>
           )}
         />
+
+        {/* Honeypot. Moved offscreen rather than display:none, since some bots skip
+            hidden inputs. Hidden from screen readers and keyboard focus. */}
+        <div
+          aria-hidden='true'
+          className='absolute -left-[9999px] h-px w-px overflow-hidden'
+        >
+          <FormField
+            control={form.control}
+            name='website'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Website</FormLabel>
+                <FormControl>
+                  <Input tabIndex={-1} autoComplete='off' {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
 
         <Turnstile
           ref={turnstileRef}
