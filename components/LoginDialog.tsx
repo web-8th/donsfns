@@ -119,7 +119,10 @@ export function LoginDialog({ className }: { className?: string }) {
           <DialogTitle>Sign in</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 pt-2'>
+          <form
+            onSubmit={(e) => form.handleSubmit(onSubmit)(e)}
+            className='space-y-4 pt-2'
+          >
             <FormField
               control={form.control}
               name='email'
