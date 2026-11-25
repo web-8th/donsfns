@@ -29,7 +29,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
+import { canSendEmail, getRemainingCooldown, markEmailSent } from '@/lib/rateLimit';
 import { cn } from '@/lib/utils';
 import { getDelayClass } from '@/utils/animations';
 
@@ -69,6 +71,8 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
     renderedAt.current = performance.now();
   }, []);
   const { toast } = useToast();
+  // Logged-in users (Don) skip the cooldown so they can test the form freely.
+  const { user } = useAuth();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -92,6 +96,13 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
       toast.error('Please complete the verification check.');
       return;
     }
+    if (!user && !canSendEmail()) {
+      const minutes = Math.ceil(getRemainingCooldown() / 1000 / 60);
+      toast.error(
+        `Please wait ${minutes} minute${minutes !== 1 ? 's' : ''} before sending another message.`
+      );
+      return;
+    }
     setIsSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
@@ -108,6 +119,8 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
       });
 
       if (!res.ok) throw new Error('Failed to send');
+
+      if (!user) markEmailSent();
 
       toast.success("Message sent — I'll be in touch soon.");
       form.reset();
