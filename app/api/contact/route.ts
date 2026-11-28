@@ -1,5 +1,5 @@
 import { buildConfirmationHtml, buildEmailHtml } from '@/lib/email';
-import { checkSpam } from '@/lib/spam';
+import { checkSpam, isBlockedSender } from '@/lib/spam';
 import { Resend } from 'resend';
 
 export async function POST(req: Request) {
@@ -20,6 +20,12 @@ export async function POST(req: Request) {
     website,
     formElapsedMs,
   } = body;
+
+  // Blocked senders get a normal success response and nothing else: no emails,
+  // no spam notification, no log line.
+  if (isBlockedSender(email)) {
+    return Response.json({ success: true }, { status: 200 });
+  }
 
   if (!/^\d{10}$/.test(phone ?? '')) {
     return Response.json(
